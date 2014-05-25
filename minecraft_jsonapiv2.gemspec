@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["odie86@gmail.com"]
   spec.summary       = %q{Minecraft JSONAPI Wrapper}
   spec.description   = %q{Simple Minecraft JSONAPI Wrapper}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/masterodie/minecraft_jsonapiv2"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

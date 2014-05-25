@@ -1,3 +1,4 @@
+require 'bundler'
 require 'rubygems'
 require 'rake/testtask'
 
