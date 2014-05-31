@@ -9,8 +9,14 @@ module Minecraft
             end
 
             def call(method)
-                response = Minecraft::JSONAPIv2::Response.new( @conn.make_request(method) ).response[method[:name].gsub(/\./, '_')]
-                response = Mash.new(response) if response.is_a? Hash or response.is_a? Array
+                if method.is_a? Array
+                    method.each { |m| call m }
+                else
+                    if method.is_a? Hash
+                        response = Minecraft::JSONAPIv2::Response.new( @conn.make_request(method) ).response[method[:name].gsub(/\./, '_')]
+                        response = Mash.new(response) if response.is_a? Hash
+                    end
+                end
                 begin
                     unless response.nil?
                         response
@@ -25,10 +31,14 @@ module Minecraft
                     block.call Minecraft::JSONAPIv2::Namespace.new(self, name.to_s)
                 else
                     response = Minecraft::JSONAPIv2::Response.new( @conn.make_request(name: name.to_s.gsub(/_/, '.'), args: args) ).response[name.to_s]
-
-                    super if (response.nil?)
-                    response = Mash.new(response) if response.is_a? Hash or response.is_a? Array
-                    response
+                    response = Mash.new(response) if response.is_a? Hash
+                    begin
+                        unless response.nil?
+                            response
+                        else
+                            raise NoResponseError
+                        end
+                    end
                 end
             end
         end
