@@ -6,14 +6,19 @@ module Minecraft
                 @response = {}
                 data = JSON.parse(data)
                 @raw_response = data
+                if data.count == 1
+                  data = data[0]
+                end
                 if data.is_a? Array
                     data.each do |d|
                         @response[d['source'].gsub(/\./, '_')] = d['success']
                     end
+                    @response = Mash.new @response.rubyify_keys!
                 else
-                    @response[data['source'].gsub(/\./, '_')] = data['success']
+                    @response = data['success']
+                    @response = Mash.new @response if @response.is_a? Hash
                 end
-                @response.rubyify_keys!
+                @response
             end
         end
     end
