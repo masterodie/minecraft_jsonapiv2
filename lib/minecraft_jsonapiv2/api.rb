@@ -9,8 +9,8 @@ module Minecraft
       end
 
       def call(method)
-          request = Minecraft::JSONAPIv2::Response.new( @conn.make_request(method) )
-          get_response_for request
+        request = Minecraft::JSONAPIv2::Response.new( @conn.make_request(method) )
+        get_response_for request
       end
 
       def get_response_for(request)
