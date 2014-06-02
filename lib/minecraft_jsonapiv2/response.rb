@@ -16,7 +16,7 @@ module Minecraft
           @response = Mash.new @response.rubyify_keys!
         else
           @response = data['success']
-          @response = Mash.new @response if @response.is_a? Hash
+          @response = Mash.new @response.rubyify_keys! if @response.is_a? Hash
         end
         @response
       end
